@@ -13,8 +13,8 @@ zstyle ':z4h:' auto-update-days '28'
 # Keyboard type: 'mac' or 'pc'.
 zstyle ':z4h:bindkey' keyboard  'pc'
 
-# Start tmux if not already in tmux.
-# zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
+# Don't start tmux.
+zstyle ':z4h:' start-tmux       no
 
 # Mark up shell's output with semantic information.
 zstyle ':z4h:' term-shell-integration 'yes'
@@ -57,14 +57,10 @@ z4h init || return
 
 # Extend PATH.
 path=(~/bin $path)
-export PATH="$HOME/.local/bin:$PATH"
+export PATH=$HOME/.local/bin:$PATH
 
 # Export environment variables.
 export GPG_TTY=$TTY
-export ZSHRC=$HOME/.zshrc
-export AWRCLUA=$HOME/.config/awesome/rc.lua
-export AWST=$HOME/.config/awesome/startup.sh
-export ALYML=$HOME/.config/alacritty/alacritty.yml
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
@@ -101,18 +97,17 @@ compdef _directories md
 alias tree='tree -a -I .git'
 alias nvim=lvim
 alias c=clear
+alias s="s -b lynx -k google"
 alias ddgr="BROWSER=lynx ddgr"
-alias p=peco
 alias pv="pipe-viewer"
 alias pvn="pipe-viewer -n"
-alias e="exa --icons --sort=modified"
-alias ee="exa --icons --sort=modified --long"
-alias ep="exa --icons --sort=modified --long -T --git-ignore"
+alias e="exa --icons -l -a -s modified"
+alias ls="exa --icons -l -a -s modified"
+alias p=peco
 
 # Add flags to existing aliases.
-alias ls="${aliases[ls]:-ls} -A"
+# alias ls="${aliases[ls]:-ls} -A"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
-
