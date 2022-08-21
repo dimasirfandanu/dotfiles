@@ -61,9 +61,11 @@ export PATH=$HOME/.local/bin:$PATH
 
 # Export environment variables.
 export GPG_TTY=$TTY
+export PROG=~/Programs/
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
+z4h source /usr/share/nvm/init-nvm.sh
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
@@ -97,13 +99,23 @@ compdef _directories md
 alias tree='tree -a -I .git'
 alias nvim=lvim
 alias c=clear
-alias s="s -b lynx -k google"
+alias s="s -b lynx -p google"
+alias saw="s -b lynx -p archwiki"
 alias ddgr="BROWSER=lynx ddgr"
 alias pv="pipe-viewer"
 alias pvn="pipe-viewer -n"
 alias e="exa --icons -l -a -s modified"
 alias ls="exa --icons -l -a -s modified"
 alias p=peco
+alias gs="git status"
+alias gad="git add ."
+alias gc="git commit"
+alias gpo="git push origin"
+alias gd="git diff"
+alias nt="navi --tldr"
+alias nc="navi --cheatsh"
+alias cat=bat
+alias ch=cht.sh
 
 # Add flags to existing aliases.
 # alias ls="${aliases[ls]:-ls} -A"
