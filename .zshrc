@@ -24,7 +24,7 @@ zstyle ':z4h:' term-shell-integration 'yes'
 zstyle ':z4h:autosuggestions' forward-char 'accept'
 
 # Recursively traverse directories when TAB-completing files.
-zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
+zstyle ':z4h:fzf-complete' recurse-dirs 'no'
 
 # Enable direnv to automatically source .envrc files.
 zstyle ':z4h:direnv'         enable 'no'
@@ -57,15 +57,16 @@ z4h init || return
 
 # Extend PATH.
 path=(~/bin $path)
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/nvim-linux64/bin:$PATH # neovim
+export PATH=$HOME/.local/bin:$PATH # localbin
 
 # Export environment variables.
 export GPG_TTY=$TTY
-export PROG=~/Programs/
+export OPENAI_API_KEY="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"
+export BROWSER=luakit
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
-z4h source /usr/share/nvm/init-nvm.sh
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
@@ -97,25 +98,15 @@ compdef _directories md
 
 # Define aliases.
 alias tree='tree -a -I .git'
-alias nvim=lvim
-alias c=clear
-alias s="s -b lynx -p google"
-alias saw="s -b lynx -p archwiki"
-alias ddgr="BROWSER=lynx ddgr"
-alias pv="pipe-viewer"
-alias pvn="pipe-viewer -n"
-alias e="exa --icons -l -a -s modified"
-alias ls="exa --icons -l -a -s modified"
-alias p=peco
-alias gs="git status"
-alias gad="git add ."
-alias gc="git commit"
-alias gpo="git push origin"
-alias gd="git diff"
-alias nt="navi --tldr"
-alias nc="navi --cheatsh"
+alias c=zsh
 alias cat=bat
-alias ch=cht.sh
+alias pg="ping google.com"
+alias g=googler
+alias ls="eza --icons -a -s modified"
+alias "ls -l"="eza --icons -l -a -s modified"
+alias p=peco
+alias nt="navi --tldr" 
+alias nc="navi --cheatsh" 
 
 # Add flags to existing aliases.
 # alias ls="${aliases[ls]:-ls} -A"
@@ -123,3 +114,8 @@ alias ch=cht.sh
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
+
+# Initializing shell
+clear && neofetch
+
+
