@@ -62,11 +62,11 @@ export PATH=$HOME/.local/bin:$PATH # localbin
 
 # Export environment variables.
 export GPG_TTY=$TTY
-export OPENAI_API_KEY="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"
-export BROWSER=luakit
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
+source /usr/share/nvm/init-nvm.sh
+[ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
@@ -102,11 +102,13 @@ alias c=zsh
 alias cat=bat
 alias pg="ping google.com"
 alias g=googler
-alias ls="eza --icons -a -s modified"
-alias "ls -l"="eza --icons -l -a -s modified"
+alias ls="eza --icons -a -s modified --group-directories-first"
+alias la="eza --icons -l -a -s modified"
 alias p=peco
 alias nt="navi --tldr" 
 alias nc="navi --cheatsh" 
+alias y="ytfzf -m"
+alias l=lvim
 
 # Add flags to existing aliases.
 # alias ls="${aliases[ls]:-ls} -A"
