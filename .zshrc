@@ -6,7 +6,7 @@
 
 # Periodic auto-update on Zsh startup: 'ask' or 'no'.
 # You can manually run `z4h update` to update everything.
-zstyle ':z4h:' auto-update      'no'
+zstyle ':z4h:' auto-update      'ask'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
 
@@ -61,40 +61,38 @@ export PATH=$HOME/nvim-linux64/bin:$PATH # neovim
 export PATH=$HOME/.local/bin:$PATH # localbin
 
 # Export environment variables.
-export GPG_TTY=$TTY
+# export GPG_TTY=$TTY
 
 # Source additional local files if they exist.
-z4h source ~/.env.zsh
 source /usr/share/nvm/init-nvm.sh
 [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
 # This is just an example that you should delete. It does nothing useful.
-z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
-z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
+# z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
+# z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
 
 # Define key bindings.
-z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
-z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace
+# z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
+# z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace
 
-z4h bindkey undo Ctrl+/ Shift+Tab  # undo the last command line change
-z4h bindkey redo Alt+/             # redo the last undone command line change
+# z4h bindkey undo Ctrl+/ Shift+Tab  # undo the last command line change
+# z4h bindkey redo Alt+/             # redo the last undone command line change
 
-z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
-z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
-z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
-z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
+# z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
+# z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
+# z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
+# z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 
 # Autoload functions.
-autoload -Uz zmv
+# autoload -Uz zmv
 
 # Define functions and completions.
-function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-compdef _directories md
+# function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 
 # Define named directories: ~w <=> Windows home directory on WSL.
-[[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
+# [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Define aliases.
 alias tree='tree -a -I .git'
@@ -109,13 +107,17 @@ alias nt="navi --tldr"
 alias nc="navi --cheatsh" 
 alias y="ytfzf -m"
 alias l=lvim
+alias gad='git add .'
+alias gc='ai commit'
+alias gps='git push'
+alias gpl='git pull'
 
 # Add flags to existing aliases.
 # alias ls="${aliases[ls]:-ls} -A"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
-setopt glob_dots     # no special treatment for file names with a leading dot
-setopt no_auto_menu  # require an extra TAB press to open the completion menu
+# setopt glob_dots     # no special treatment for file names with a leading dot
+# setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 # Initializing shell
 clear && neofetch
