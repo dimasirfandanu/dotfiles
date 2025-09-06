@@ -1,5 +1,3 @@
-source ~/.cloud-shell-startup.sh
-
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
 # variables such as PATH) in this file or in files sourced from it.
@@ -96,12 +94,42 @@ compdef _directories md
 
 # Define aliases.
 alias tree='tree -a -I .git'
+alias cat='batcat'
 
 # Add flags to existing aliases.
-alias ls="${aliases[ls]:-ls} -A"
+alias ls='eza'
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
-clear
+if ! command -v tmux &> /dev/null; then
+  echo "tmux is not installed. Installing it now..."
+  sudo apt-get update && sudo apt-get install -y tmux
+fi
+
+if ! command -v batcat &> /dev/null; then
+  echo "batcat is not installed. Installing it now in the background..."
+  (sudo apt-get update && sudo apt-get install -y bat) &
+fi
+
+alias whatsapp='cd /home/dimasputrairfandanu/whatsapp-cli && npm start'
+
+# Install neovim if not installed
+if ! command -v nvim &> /dev/null; then
+  echo "neovim is not installed. Installing it now in the background..."
+  (sudo apt-get update && sudo apt-get install -y neovim) &
+fi
+
+# Install LunarVim and set environment
+if ! command -v lvim &> /dev/null; then
+    echo "Installing LunarVim in the background. This may take a moment..."
+    (LV_BRANCH='release-1.4/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/lunarvim/master/utils/installer/install.sh) --yes) &
+fi
+
+# Add LunarVim to the PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Set LunarVim environment variables
+export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"$HOME/.config/lvim"}"
+export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"$HOME/.cache/lvim"}"
