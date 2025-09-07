@@ -93,7 +93,9 @@ compdef _directories md
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Define aliases.
+# Alias for listing files with tree structure, ignoring .git directory
 alias tree='tree -a -I .git'
+# Alias for viewing file content with batcat
 alias cat='batcat'
 
 # Install eza if not installed
@@ -103,22 +105,26 @@ if ! command -v eza &> /dev/null; then
 fi
 
 # Add flags to existing aliases.
+# Alias for listing files with eza
 alias ls='eza'
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
+# Install tmux if not installed
 if ! command -v tmux &> /dev/null; then
   echo "tmux is not installed. Installing it now..."
   sudo apt-get update && sudo apt-get install -y tmux
 fi
 
+# Install bat if not installed
 if ! command -v batcat &> /dev/null; then
   echo "batcat is not installed. Installing it now..."
   sudo apt-get update && sudo apt-get install -y bat
 fi
 
+# Alias for starting whatsapp-cli
 alias whatsapp='cd /home/dimasputrairfandanu/whatsapp-cli && npm start'
 
 # Install neovim if not installed
@@ -157,5 +163,6 @@ if [ ! -d "/home/dimasputrairfandanu/sherlock" ]; then
     git clone https://github.com/sherlock-project/sherlock.git /home/dimasputrairfandanu/sherlock && cd /home/dimasputrairfandanu/sherlock && python3 -m pip install -r requirements.txt
 fi
 
+# Alias for running sherlock
 alias sherlock='cd /home/dimasputrairfandanu/sherlock && python3 -m sherlock_project'
 clear

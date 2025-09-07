@@ -95,21 +95,37 @@ source /usr/share/nvm/init-nvm.sh
 # [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Define aliases.
+# Alias for listing files with tree structure, ignoring .git directory
 alias tree='tree -a -I .git'
+# Alias for switching to zsh
 alias c=zsh
+# Alias for viewing file content with bat
 alias cat=bat
+# Alias for pinging google.com
 alias pg="ping google.com"
+# Alias for searching with googler
 alias g=googler
+# Alias for listing files with eza, showing icons, all files, sorted by modified date, and grouping directories first
 alias ls="eza --icons -a -s modified --group-directories-first"
+# Alias for long listing files with eza, showing icons, all files, and sorted by modified date
 alias la="eza --icons -l -a -s modified"
+# Alias for peco
 alias p=peco
+# Alias for navi with tldr
 alias nt="navi --tldr" 
+# Alias for navi with cheatsh
 alias nc="navi --cheatsh" 
+# Alias for ytfzf
 alias y="ytfzf -m"
+# Alias for lvim
 alias l=lvim
+# Alias for git add all
 alias gad='git add .'
+# Alias for ai commit
 alias gc='ai commit'
+# Alias for git push
 alias gps='git push'
+# Alias for git pull
 alias gpl='git pull'
 
 # Add flags to existing aliases.
