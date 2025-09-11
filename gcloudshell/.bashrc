@@ -1,6 +1,3 @@
-# This script checks if zsh is installed and if it is not the current shell.
-# If zsh is not installed, it will be installed.
-# If zsh is not the current shell, it will be set as the current shell.
 if [ -f "/google/devshell/bashrc.google" ]; then
   source "/google/devshell/bashrc.google"
 fi

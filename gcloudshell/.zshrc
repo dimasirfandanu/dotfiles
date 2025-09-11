@@ -6,6 +6,9 @@
 
 # Periodic auto-update on Zsh startup: 'ask' or 'no'.
 # You can manually run `z4h update` to update everything.
+
+rm -rf $HOME/.npm $HOME/.cargo $HOME/.rustup
+
 zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
@@ -53,6 +56,7 @@ z4h install ohmyzsh/ohmyzsh || return
 # initialize Zsh. After this point console I/O is unavailable until Zsh
 # is fully initialized. Everything that requires user interaction or can
 # perform network I/O must be done above. Everything else is best done below.
+
 z4h init || return
 
 # Extend PATH.
@@ -93,50 +97,45 @@ compdef _directories md
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Define aliases.
-# Alias for listing files with tree structure, ignoring .git directory
 alias tree='tree -a -I .git'
-# Alias for viewing file content with batcat
 alias cat='batcat'
 
-# Install eza if not installed
-if ! command -v eza &> /dev/null; then
-  echo "eza is not installed. Installing it now..."
-  sudo apt-get update && sudo apt-get install -y eza
-fi
-
 # Add flags to existing aliases.
-# Alias for listing files with eza
 alias ls='eza'
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
-# Install tmux if not installed
-if ! command -v tmux &> /dev/null; then
-  echo "tmux is not installed. Installing it now..."
-  sudo apt-get update && sudo apt-get install -y tmux
-fi
+alias whatsapp='cd $HOME/whatsapp-cli && npm start'
 
-# Install bat if not installed
-if ! command -v batcat &> /dev/null; then
-  echo "batcat is not installed. Installing it now..."
-  sudo apt-get update && sudo apt-get install -y bat
-fi
+# --- Installations ---
 
-# Alias for starting whatsapp-cli
-alias whatsapp='cd /home/dimasputrairfandanu/whatsapp-cli && npm start'
+# Update package list once before starting installations
+echo "Checking for and installing required packages..."
+sudo apt-get update
 
-# Install neovim if not installed
-if ! command -v nvim &> /dev/null; then
-  echo "neovim is not installed. Installing it now..."
-  sudo apt-get update && sudo apt-get install -y neovim
-fi
+# Function to install a package if the command doesn't exist
+install_if_missing() {
+    local cmd=$1
+    local pkg=$2
+    if ! command -v "$cmd" &> /dev/null; then
+        echo "Command '$cmd' not found. Installing '$pkg'..."
+        sudo apt-get install -y "$pkg"
+    fi
+}
 
-# Install LunarVim and set environment
+# Install packages from apt
+install_if_missing "eza" "eza"
+install_if_missing "tmux" "tmux"
+install_if_missing "batcat" "bat"
+install_if_missing "nvim" "neovim"
+install_if_missing "neofetch" "neofetch"
+
+# Install LunarVim if not installed
 if ! command -v lvim &> /dev/null; then
     echo "Installing LunarVim. This may take a moment..."
-    LV_BRANCH='release-1.4/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/lunarvim/master/utils/installer/install.sh) --yes
+    LV_BRANCH='release-1.4/neovim-0.9' bash <(curl https://raw.githubusercontent.com/LunarVim/lunarvim/master/utils/installer/install.sh) --yes
 fi
 
 # Add LunarVim to the PATH
@@ -146,23 +145,18 @@ export PATH="$HOME/.local/bin:$PATH"
 export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"$HOME/.config/lvim"}"
 export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"$HOME/.cache/lvim"}"
 
-# Install neofetch if not installed
-if ! command -v neofetch &> /dev/null; then
-  echo "neofetch is not installed. Installing it now..."
-  sudo apt-get update && sudo apt-get install -y neofetch
+# Install sherlock if not installed
+if [ ! -d "$HOME/sherlock" ]; then
+    echo "Sherlock is not installed. Installing it now..."
+    git clone https://github.com/sherlock-project/sherlock.git $HOME/sherlock && cd $HOME/sherlock && python3 -m pip install -r requirements.txt
 fi
+
+echo "Package installation check complete."
 
 # Alias for clear and neofetch
 alias clear='clear && neofetch'
 
+alias sherlock='cd $HOME/sherlock && python3 -m sherlock_project'
 
-
-# Install sherlock if not installed
-if [ ! -d "/home/dimasputrairfandanu/sherlock" ]; then
-    echo "Sherlock is not installed. Installing it now..."
-    git clone https://github.com/sherlock-project/sherlock.git /home/dimasputrairfandanu/sherlock && cd /home/dimasputrairfandanu/sherlock && python3 -m pip install -r requirements.txt
-fi
-
-# Alias for running sherlock
-alias sherlock='cd /home/dimasputrairfandanu/sherlock && python3 -m sherlock_project'
+cd $HOME
 clear
